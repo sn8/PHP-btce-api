@@ -5,11 +5,13 @@
  * @author marinu666
  * @license MIT License - https://github.com/marinu666/PHP-btce-api
  */
-class BTCeAPI {
-    
+
+namespace sn8;
+
+class WEXnzAPI {
     const DIRECTION_BUY = 'buy';
     const DIRECTION_SELL = 'sell';
-    protected $public_api = 'https://btc-e.com/api/3/';
+    protected $public_api = 'https://wex.nz/api/3/';
     
     protected $api_key;
     protected $api_secret;
