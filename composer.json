@@ -1,7 +1,7 @@
 {
     "name": "sn8/wexnz-api",
     "description": "WEX.nz API Class",
-    "version": "1.0.0"
+    "version": "1.0.0", 
     "license": "MIT",
     "autoload": {
         "classmap": ["wexnz-api.php"]
