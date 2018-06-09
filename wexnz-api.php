@@ -3,7 +3,8 @@
  * API-call related functions
  *
  * @author marinu666
- * @license MIT License - https://github.com/marinu666/PHP-btce-api
+ * @author sn8
+ * @license MIT License - https://github.com/sn8/PHP-wexnz-api
  */
 
 namespace sn8;
@@ -12,6 +13,7 @@ class WEXnzAPI {
     const DIRECTION_BUY = 'buy';
     const DIRECTION_SELL = 'sell';
     protected $public_api = 'https://wex.nz/api/3/';
+    protected $trade_api = 'https://wex.nz/tapi/';
     
     protected $api_key;
     protected $api_secret;
@@ -68,8 +70,8 @@ class WEXnzAPI {
         $ch = null;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; Marinu666 BTCE PHP client; '.php_uname('s').'; PHP/'.phpversion().')');
-        curl_setopt($ch, CURLOPT_URL, 'https://btc-e.com/tapi/');
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible;)');
+        curl_setopt($ch, CURLOPT_URL, $this->trade_api);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -81,7 +83,7 @@ class WEXnzAPI {
         if($res === false) {
             $e = curl_error($ch);
             curl_close($ch);
-            throw new BTCeAPIFailureException('Could not get reply: '.$e);
+            throw new WEXnzAPIFailureException('Could not get reply: '.$e);
         } else {
             curl_close($ch);
         }
@@ -90,7 +92,7 @@ class WEXnzAPI {
         $result = json_decode($res, true);
         // is it valid JSON?
         if(!$result) {
-            throw new BTCeAPIInvalidJSONException('Invalid data received, please make sure connection is working and requested API exists');
+            throw new WEXnzAPIInvalidJSONException('Invalid data received, please make sure connection is working and requested API exists');
         }
         
         // Recover from an incorrect noonce
@@ -103,7 +105,7 @@ class WEXnzAPI {
                 $this->noonce = $matches[1];
                 return $this->apiQuery($method, $req);
             } else {
-                throw new BTCeAPIErrorException('API Error Message: '.$result['error'].". Response: ".print_r($result, true));
+                throw new WEXnzAPIErrorException('API Error Message: '.$result['error'].". Response: ".print_r($result, true));
             }
         }
         // Cool -> Return
@@ -149,7 +151,7 @@ class WEXnzAPI {
             );
             return $data; 
         } else {
-            throw new BTCeAPIInvalidParameterException('Expected constant from '.__CLASS__.'::DIRECTION_BUY or '.__CLASS__.'::DIRECTION_SELL. Found: '.$direction);
+            throw new WEXnzAPIInvalidParameterException('Expected constant from '.__CLASS__.'::DIRECTION_BUY or '.__CLASS__.'::DIRECTION_SELL. Found: '.$direction);
         }
     }
     
@@ -181,7 +183,7 @@ class WEXnzAPI {
                     'active' => 0
                 ));
         if($data['success'] == "0") {
-            throw new BTCeAPIErrorException("Error: ".$data['error']);
+            throw new WEXnzAPIErrorException("Error: ".$data['error']);
         } else {
             return($data);
         }
@@ -235,9 +237,9 @@ class WEXnzAPI {
 /**
  * Exceptions
  */
-class BTCeAPIException extends Exception {}
-class BTCeAPIFailureException extends BTCeAPIException {}
-class BTCeAPIInvalidJSONException extends BTCeAPIException {}
-class BTCeAPIErrorException extends BTCeAPIException {}
-class BTCeAPIInvalidParameterException extends BTCeAPIException {}
+class WEXnzAPIException extends Exception {}
+class WEXnzAPIFailureException extends WEXnzAPIException {}
+class WEXnzAPIInvalidJSONException extends WEXnzAPIException {}
+class WEXnzAPIErrorException extends WEXnzAPIException {}
+class WEXnzAPIInvalidParameterException extends WEXnzAPIException {}
 ?>

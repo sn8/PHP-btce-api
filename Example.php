@@ -1,13 +1,15 @@
 <?php
 /**
- * Example Usage of the BTCe API PHP Class
+ * Example Usage of the WEXnzAPI API PHP Class
  *
  * @author marinu666
- * @license MIT License - https://github.com/marinu666/PHP-btce-api
+ * @author sn8
+ * @license MIT License - https://github.com/sn8/PHP-wexnz-api
  */
 
-require_once('btce-api.php');
-$BTCeAPI = new BTCeAPI(
+use sn8\WEXnzAPI;
+
+$api = new WEXnzAPI(
                     /*API KEY:    */    '', 
                     /*API SECRET: */    ''
                       );
@@ -15,19 +17,19 @@ $BTCeAPI = new BTCeAPI(
 // Example getInfo
 try {
     // Perform the API Call
-    $getInfo = $BTCeAPI->apiQuery('getInfo');
+    $getInfo = $api->apiQuery('getInfo');
     // Print so we can see the output
     print_r($getInfo);
-} catch(BTCeAPIException $e) {
+} catch(WEXnzAPIException $e) {
     echo $e->getMessage();
 }
 // Example Custom query
 try {
     // Input Parameters as an array (see: https://btc-e.com/api/documentation for list of parameters per call)
-    $params = array('pair' => 'btc_usd'); // Show info for the btc_usd pair
+    $params = ['pair' => 'btc_usd']; // Show info for the btc_usd pair
     // Perform the API Query
-    print_r($BTCeAPI->apiQuery('ActiveOrders', $params));
-} catch(BTCeAPIException $e) {
+    print_r($api->apiQuery('ActiveOrders', $params));
+} catch(WEXnzAPIException $e) {
     echo $e->getMessage();
 }
 
@@ -36,30 +38,30 @@ try {
     /*
      * CAUTION: THIS IS COMMENTED OUT SO YOU CAN READ HOW TO DO IT!
      */
-    // $BTCeAPI->makeOrder(---AMOUNT---, ---PAIR---, BTCeAPI::DIRECTION_BUY/BTCeAPI::DIRECTION_SELL, ---PRICE---);
-    // $BTCeAPI->cancelOrder(---ORDER IR---);
+    // $api->makeOrder(---AMOUNT---, ---PAIR---, WEXnzAPI::DIRECTION_BUY/WEXnzAPI::DIRECTION_SELL, ---PRICE---);
+    // $api->cancelOrder(---ORDER IR---);
 
     // Example: to buy a bitcoin for $100
-    // $result = $BTCeAPI->makeOrder(1, 'btc_usd', BTCeAPI::DIRECTION_BUY, 100);
+    // $result = $api->makeOrder(1, 'btc_usd', WEXnzAPI::DIRECTION_BUY, 100);
 
     // Example: to cancel the order
-    // $BTCeAPI->cancelOrder($result['return']['order_id']);
-} catch(BTCeAPIInvalidParameterException $e) {
+    // $api->cancelOrder($result['return']['order_id']);
+} catch(WEXnzAPIInvalidParameterException $e) {
     echo $e->getMessage();
-} catch(BTCeAPIException $e) {
+} catch(WEXnzAPIException $e) {
     echo $e->getMessage();
 }
 
 // Example Public API JSON Request (Such as Fee / BTC_USD Tickers etc) - The result you get back is JSON RESTed to PHP
 // Fee Call
 $btc_usd = array();
-$btc_usd['fee'] = $BTCeAPI->getPairFee('btc_usd');
+$btc_usd['fee'] = $api->getPairFee('btc_usd');
 // Ticker Call
-$btc_usd['ticker'] = $BTCeAPI->getPairTicker('btc_usd');
+$btc_usd['ticker'] = $api->getPairTicker('btc_usd');
 // Trades Call
-$btc_usd['trades'] = $BTCeAPI->getPairTrades('btc_usd');
+$btc_usd['trades'] = $api->getPairTrades('btc_usd');
 // Depth Call
-$btc_usd['depth'] = $BTCeAPI->getPairDepth('btc_usd');
+$btc_usd['depth'] = $api->getPairDepth('btc_usd');
 // Show all information
 print_r($btc_usd);
 
