@@ -1,10 +1,7 @@
-btce
-====
-
-BTC-e API Class
+WEX.nz API Class
 
 
-Allows for the use of the Private and Public APIs from BTC-e.
+Allows for the use of the Private and Public APIs from WEX.nz.
 
 Built in Support For:
 	Public API:
@@ -25,12 +22,13 @@ Built in Support For:
 	
 	
 	How to integrate:
-	require_once('btce-api.php');
-	$BTCeAPI = new BTCeAPI({APIKEY},{APISECRET}[,Optional:{START_NOONCE}]);
+	
+	use sn8\WEXnzAPI;
+	$api = new WEXnzAPI({APIKEY},{APISECRET}[,Optional:{START_NOONCE}]);
 	
 	
 	Private API Quick Example:
-	$BTCeAPI->makeOrder($amount, $pair, $direction, $price);
+	$api->makeOrder($amount, $pair, $direction, $price);
 	
 	Public API Quick Example:
-	$BTCeAPI->getPairDepth('btc_usd');
+	$api->getPairDepth('btc_usd');
