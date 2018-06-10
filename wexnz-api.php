@@ -237,7 +237,7 @@ class WEXnzAPI {
 /**
  * Exceptions
  */
-class WEXnzAPIException extends Exception {}
+class WEXnzAPIException extends \Exception {}
 class WEXnzAPIFailureException extends WEXnzAPIException {}
 class WEXnzAPIInvalidJSONException extends WEXnzAPIException {}
 class WEXnzAPIErrorException extends WEXnzAPIException {}
