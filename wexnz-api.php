@@ -20,7 +20,7 @@ class WEXnzAPI {
     protected $noonce;
     protected $RETRY_FLAG = false;
     
-    public function __construct($api_key, $api_secret, $base_noonce = false) {
+    public function __construct($api_key = '', $api_secret = '', $base_noonce = false) {
         $this->api_key = $api_key;
         $this->api_secret = $api_secret;
         if($base_noonce === false) {
